@@ -31,26 +31,27 @@ public class EmployeeController {
         loginFrame = new JFrame("Employee Login");
         loginFrame.setSize(420, 420);
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginFrame.getContentPane().setBackground(Color.white);// Dark background
+        loginFrame.getContentPane().setBackground(Color.white);
         loginFrame.setLayout(null);
 
-
-        // Add stylish username and password fields
+        // Add username and password fields
         JLabel usernameLabel = createStyledLabel("Username: ");
         usernameLabel.setForeground(Color.gray);
-        usernameLabel.setBounds(50,100,85,25);
+        usernameLabel.setBounds(50, 100, 85, 25);
         JTextField usernameField = createStyledTextField();
         usernameField.setBounds(125, 100, 200, 25);
 
         JLabel passwordLabel = createStyledLabel("Password: ");
         passwordLabel.setForeground(Color.gray);
-        passwordLabel.setBounds(50,150,85,25);
+        passwordLabel.setBounds(50, 150, 85, 25);
         JPasswordField passwordField = createStyledPasswordField();
         passwordField.setBounds(125, 150, 200, 25);
 
-        // Add stylish login button
+        // Add login and cancel buttons
+        JButton cancelButton = createStyledButton("Cancel");
         JButton loginButton = createStyledButton("Login");
         loginButton.setBounds(150, 200, 100, 35);
+        cancelButton.setBounds(150, 250, 100, 35);
 
         // Add components to the frame
         loginFrame.setLocationRelativeTo(null);
@@ -60,22 +61,33 @@ public class EmployeeController {
         loginFrame.add(passwordField);
         loginFrame.add(new JLabel());  // Empty label for spacing
         loginFrame.add(loginButton);
+        loginFrame.add(cancelButton);
 
         // Add action listener to login button
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
-                user = usernameField.getText();
                 String password = new String(passwordField.getPassword());
 
-                if (model.validateEmployee(username, password)) {
+                if (username.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(loginFrame, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (model.validateEmployee(username, password)) {
+                    user = username;
                     view.showLoginSuccess();
                     createPasswordChangeFrame();  // Open password change frame on successful login
                     loginFrame.dispose();  // Close login frame
                 } else {
                     view.showLoginFailure();
                 }
+            }
+        });
+
+        // Add action listener to cancel button
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginFrame.dispose();
             }
         });
 
@@ -88,26 +100,28 @@ public class EmployeeController {
     public void createPasswordChangeFrame() {
         passwordChangeFrame = new JFrame("Password Change");
         passwordChangeFrame.setSize(420, 420);
-       // passwordChangeFrame.setLocation(400,400);
         passwordChangeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         passwordChangeFrame.setLayout(null);
         passwordChangeFrame.setLocationRelativeTo(null);
-        passwordChangeFrame.getContentPane().setBackground(Color.white); // Dark background
+        passwordChangeFrame.getContentPane().setBackground(Color.white);
 
-        // Add stylish fields for current password and new password
+        // Add current password and new password fields
         JLabel currentPasswordLabel = createStyledLabel("Current Password: ");
-        currentPasswordLabel.setBounds(50,100,250,25);
+        currentPasswordLabel.setBounds(50, 100, 250, 25);
         JPasswordField currentPasswordField = createStyledPasswordField();
-        currentPasswordField.setBounds(185,100,125,25);
+        currentPasswordField.setBounds(185, 100, 125, 25);
+
         JLabel newPasswordLabel = createStyledLabel("New Password: ");
-        newPasswordLabel.setBounds(60,150,200,25);
+        newPasswordLabel.setBounds(60, 150, 200, 25);
         JPasswordField newPasswordField = createStyledPasswordField();
-        newPasswordField.setBounds(180,150,130,25);
+        newPasswordField.setBounds(180, 150, 130, 25);
 
-
-        // Add stylish change password button
+        // Add change password and cancel buttons
         JButton changePasswordButton = createStyledButton("Change Password");
-        changePasswordButton.setBounds(150,250,145,35);
+        changePasswordButton.setBounds(150, 220, 145, 35);
+        JButton cancelButton = createStyledButton("Cancel");
+        cancelButton.setBounds(165, 270, 100, 35);
+
         // Add components to the frame
         passwordChangeFrame.add(currentPasswordLabel);
         passwordChangeFrame.add(currentPasswordField);
@@ -115,6 +129,7 @@ public class EmployeeController {
         passwordChangeFrame.add(newPasswordField);
         passwordChangeFrame.add(new JLabel());  // Empty label for spacing
         passwordChangeFrame.add(changePasswordButton);
+        passwordChangeFrame.add(cancelButton);
 
         // Add action listener to change password button
         changePasswordButton.addActionListener(new ActionListener() {
@@ -123,13 +138,22 @@ public class EmployeeController {
                 String currentPassword = new String(currentPasswordField.getPassword());
                 String newPassword = new String(newPasswordField.getPassword());
 
-                if (model.changePassword(user, currentPassword, newPassword))
-                {
+                if (currentPassword.isEmpty() || newPassword.isEmpty()) {
+                    JOptionPane.showMessageDialog(passwordChangeFrame, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else if (model.changePassword(user, currentPassword, newPassword)) {
                     view.showPasswordChangeSuccess(user);
                     passwordChangeFrame.dispose();  // Close the password change frame after successful password change
                 } else {
                     view.showPasswordChangeFailure();
                 }
+            }
+        });
+
+        // Add action listener to cancel button
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                passwordChangeFrame.dispose();
             }
         });
 
@@ -149,7 +173,7 @@ public class EmployeeController {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
         textField.setForeground(Color.gray);
-        textField.setBackground(new Color(55, 60, 70));
+        textField.setBackground(new Color(211, 211, 211));
         textField.setBorder(BorderFactory.createLineBorder(new Color(90, 98, 118), 1));
         return textField;
     }
@@ -159,7 +183,7 @@ public class EmployeeController {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
         passwordField.setForeground(Color.WHITE);
-        passwordField.setBackground(new Color(55, 60, 70));
+        passwordField.setBackground(new Color(211, 211, 211));
         passwordField.setBorder(BorderFactory.createLineBorder(new Color(90, 98, 118), 1));
         return passwordField;
     }
