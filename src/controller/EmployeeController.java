@@ -1,6 +1,7 @@
 package controller;
 
 import model.EmployeeModel;
+import model.TaxTariffInfo;
 import view.EmployeeView;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class EmployeeController {
     private EmployeeView view;
     private JFrame loginFrame;
     private JFrame passwordChangeFrame;
+    private JFrame Menuframe;
 
     // Constructor
     public EmployeeController(EmployeeModel model, EmployeeView view) {
@@ -25,6 +27,74 @@ public class EmployeeController {
     public void loadEmployeeData() {
         model.loadEmployeeData();
     }
+    public void showMenu() {
+        // Resize the icon to fit better with the text
+        ImageIcon icon = new ImageIcon(new ImageIcon("C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\icons\\Network-Control-Panel-icon.png")
+                .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+
+        // Create the JLabel with text and icon, center-align the icon
+        JLabel empMenu = new JLabel("Employee Menu", icon, JLabel.CENTER);
+
+        // Set font for a more prominent title
+        empMenu.setFont(new Font("Arial", Font.BOLD, 20));
+        empMenu.setForeground(Color.DARK_GRAY); // Prominent dark text color
+
+        // Set bounds for positioning the label at the top center
+        empMenu.setBounds(125, 10, 250, 80); // Adjust width and height as necessary
+
+        // Create buttons with their respective bounds
+        JButton ChangePass = createStyledButton("Change Password");
+        ChangePass.setBounds(80, 120, 150, 35);
+
+        JButton viewBill = createStyledButton("View Bills");
+        viewBill.setBounds(230, 120, 150, 35);
+
+        JButton ViewCNIC = createStyledButton("Show Customers CNIC Dates");
+        ViewCNIC.setBounds(80, 170, 300, 35);
+
+        JButton Billreports = createStyledButton("Bill Reports");
+        Billreports.setBounds(80, 220, 300, 35);
+
+        JButton taxtarriff = createStyledButton("Update Tax Tariff");
+        taxtarriff.setBounds(80, 270, 300, 35);
+
+        JButton cancel = createStyledButton("Cancel");
+        cancel.setBounds(300, 350, 100, 35);
+
+        // Create the menu frame
+        Menuframe = new JFrame("Employee Control");
+        Menuframe.setLayout(null);
+
+        // Add components to the frame
+        Menuframe.add(empMenu); // Add the label with icon and text at the top center
+        Menuframe.add(ChangePass);
+        Menuframe.add(viewBill);
+        Menuframe.add(ViewCNIC);
+        Menuframe.add(Billreports);
+        Menuframe.add(taxtarriff);
+        Menuframe.add(cancel);
+
+        // Configure the frame
+        Menuframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Menuframe.setSize(500, 500); // Increase size to fit all buttons comfortably
+        Menuframe.setLocationRelativeTo(null); // Center the frame on the screen
+        Menuframe.setVisible(true);
+
+
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menuframe.dispose();
+            }
+        });
+        ChangePass.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createPasswordChangeFrame();
+            }
+        });
+    }
+
 
     // Create the employee login frame with enhanced style
     public void createLoginFrame() {
@@ -47,11 +117,16 @@ public class EmployeeController {
         JPasswordField passwordField = createStyledPasswordField();
         passwordField.setBounds(125, 150, 200, 25);
 
+        // Add 'Show Password' checkbox
+        JCheckBox showPasswordCheckBox = new JCheckBox("Show Password");
+        showPasswordCheckBox.setBounds(125, 180, 200, 25);
+        showPasswordCheckBox.setBackground(Color.white);
+
         // Add login and cancel buttons
         JButton cancelButton = createStyledButton("Cancel");
         JButton loginButton = createStyledButton("Login");
-        loginButton.setBounds(150, 200, 100, 35);
-        cancelButton.setBounds(150, 250, 100, 35);
+        loginButton.setBounds(150, 230, 100, 35);
+        cancelButton.setBounds(150, 280, 100, 35);
 
         // Add components to the frame
         loginFrame.setLocationRelativeTo(null);
@@ -59,9 +134,22 @@ public class EmployeeController {
         loginFrame.add(usernameField);
         loginFrame.add(passwordLabel);
         loginFrame.add(passwordField);
+        loginFrame.add(showPasswordCheckBox);
         loginFrame.add(new JLabel());  // Empty label for spacing
         loginFrame.add(loginButton);
         loginFrame.add(cancelButton);
+
+        // Add action listener to show password checkbox
+        showPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showPasswordCheckBox.isSelected()) {
+                    passwordField.setEchoChar((char) 0);  // Show password
+                } else {
+                    passwordField.setEchoChar('•');  // Hide password
+                }
+            }
+        });
 
         // Add action listener to login button
         loginButton.addActionListener(new ActionListener() {
@@ -75,7 +163,7 @@ public class EmployeeController {
                 } else if (model.validateEmployee(username, password)) {
                     user = username;
                     view.showLoginSuccess();
-                    createPasswordChangeFrame();  // Open password change frame on successful login
+                    showMenu();
                     loginFrame.dispose();  // Close login frame
                 } else {
                     view.showLoginFailure();
@@ -96,6 +184,7 @@ public class EmployeeController {
         loginFrame.setVisible(true);
     }
 
+
     // Create the password change frame with enhanced style
     public void createPasswordChangeFrame() {
         passwordChangeFrame = new JFrame("Password Change");
@@ -109,27 +198,60 @@ public class EmployeeController {
         JLabel currentPasswordLabel = createStyledLabel("Current Password: ");
         currentPasswordLabel.setBounds(50, 100, 250, 25);
         JPasswordField currentPasswordField = createStyledPasswordField();
-        currentPasswordField.setBounds(185, 100, 125, 25);
+        currentPasswordField.setBounds(200, 100, 150, 25);  // Adjusted field position
 
         JLabel newPasswordLabel = createStyledLabel("New Password: ");
-        newPasswordLabel.setBounds(60, 150, 200, 25);
+        newPasswordLabel.setBounds(50, 170, 250, 25);
         JPasswordField newPasswordField = createStyledPasswordField();
-        newPasswordField.setBounds(180, 150, 130, 25);
+        newPasswordField.setBounds(200, 170, 150, 25);  // Adjusted field position
+
+        // Add 'Show Password' checkboxes for both fields
+        JCheckBox showCurrentPasswordCheckBox = new JCheckBox("Show Current Password");
+        showCurrentPasswordCheckBox.setBounds(200, 130, 180, 25);  // Adjusted checkbox position
+        showCurrentPasswordCheckBox.setBackground(Color.white);
+
+        JCheckBox showNewPasswordCheckBox = new JCheckBox("Show New Password");
+        showNewPasswordCheckBox.setBounds(200, 200, 150, 25);  // Adjusted checkbox position
+        showNewPasswordCheckBox.setBackground(Color.white);
 
         // Add change password and cancel buttons
         JButton changePasswordButton = createStyledButton("Change Password");
-        changePasswordButton.setBounds(150, 220, 145, 35);
+        changePasswordButton.setBounds(140, 250, 145, 35);
         JButton cancelButton = createStyledButton("Cancel");
-        cancelButton.setBounds(165, 270, 100, 35);
+        cancelButton.setBounds(165, 300, 100, 35);
 
         // Add components to the frame
         passwordChangeFrame.add(currentPasswordLabel);
         passwordChangeFrame.add(currentPasswordField);
         passwordChangeFrame.add(newPasswordLabel);
         passwordChangeFrame.add(newPasswordField);
-        passwordChangeFrame.add(new JLabel());  // Empty label for spacing
+        passwordChangeFrame.add(showCurrentPasswordCheckBox);
+        passwordChangeFrame.add(showNewPasswordCheckBox);
         passwordChangeFrame.add(changePasswordButton);
         passwordChangeFrame.add(cancelButton);
+
+        // Add action listeners to the 'Show Password' checkboxes
+        showCurrentPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showCurrentPasswordCheckBox.isSelected()) {
+                    currentPasswordField.setEchoChar((char) 0);  // Show current password
+                } else {
+                    currentPasswordField.setEchoChar('•');  // Hide current password
+                }
+            }
+        });
+
+        showNewPasswordCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (showNewPasswordCheckBox.isSelected()) {
+                    newPasswordField.setEchoChar((char) 0);  // Show new password
+                } else {
+                    newPasswordField.setEchoChar('•');  // Hide new password
+                }
+            }
+        });
 
         // Add action listener to change password button
         changePasswordButton.addActionListener(new ActionListener() {
@@ -160,6 +282,7 @@ public class EmployeeController {
         passwordChangeFrame.setVisible(true);
     }
 
+
     // Method to create a styled JLabel
     private JLabel createStyledLabel(String text) {
         JLabel label = new JLabel(text);
@@ -172,7 +295,7 @@ public class EmployeeController {
     private JTextField createStyledTextField() {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setForeground(Color.gray);
+        textField.setForeground(Color.black);
         textField.setBackground(new Color(211, 211, 211));
         textField.setBorder(BorderFactory.createLineBorder(new Color(90, 98, 118), 1));
         return textField;
@@ -182,7 +305,7 @@ public class EmployeeController {
     private JPasswordField createStyledPasswordField() {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passwordField.setForeground(Color.WHITE);
+        passwordField.setForeground(Color.black);
         passwordField.setBackground(new Color(211, 211, 211));
         passwordField.setBorder(BorderFactory.createLineBorder(new Color(90, 98, 118), 1));
         return passwordField;
