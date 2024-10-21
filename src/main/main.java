@@ -64,7 +64,6 @@ public class main {
         if(obj.getvalue()==1)
         {
            employeeController.createLoginFrame();
-           employeeController.createPasswordChangeFrame();
 
         }
         else if(obj.getvalue()==2)
