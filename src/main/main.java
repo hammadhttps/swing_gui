@@ -50,22 +50,23 @@ public class main {
         NadraDBModel nadraModel = new NadraDBModel();
         NadraDBView nadraView = new NadraDBView();
         NadraDBController nadraController = new NadraDBController(nadraModel, nadraView);
-        List<NadraDBModel> nadraList = nadraController.loadNadraData();
-        List<Customer> customers = Customer.loadCustomerData();
+        //  nadraController.showExpiries();
+        //nadraController.updateExp();
+
 
         TaxTariffInfo taxTariffModel = new TaxTariffInfo(tariffTaxFile);
         TaxTariffView taxTariffView = new TaxTariffView();
         TaxTariffController taxTariffController = new TaxTariffController(taxTariffModel, taxTariffView);
 
 
-        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
-        sleep(2500);
-        if (obj.getvalue() == 1) {
-            employeeController.createLoginFrame();
-
-        } else if (obj.getvalue() == 2) {
-
-        }
+//        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
+//        sleep(2500);
+//        if (obj.getvalue() == 1) {
+//            employeeController.createLoginFrame();
+//
+//        } else if (obj.getvalue() == 2) {
+//
+//        }
 
 
     }
