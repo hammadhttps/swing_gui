@@ -16,8 +16,9 @@ public class BillingInfo {
     private String due_date;
     private String bill_paid_status;
     private String payment_date;
+    static String filename;
 
-    public BillingInfo() {}
+    public BillingInfo(String filename1) { filename=filename1;}
 
     public BillingInfo(String cus_id, int billing_m, int curr_reg_meter, int curr_reg_peak, String reading_date,
                        int cost_of_elec, int sales_tax, int fixed_charges, int total_amnt,
@@ -165,7 +166,7 @@ public class BillingInfo {
         return billingList;
     }
 
-    public static void saveBillingData(List<BillingInfo> billingInfos, String filename) {
+    public static void saveBillingData(List<BillingInfo> billingInfos) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (BillingInfo billingInfo : billingInfos) {
                 writer.write(billingInfo.getCus_id() + "," + billingInfo.getBilling_month() + "," + billingInfo.getCurr_reg_meter() + "," +

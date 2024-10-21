@@ -60,7 +60,7 @@ public class BillingController {
 
         if (bill != null && bill.getBill_paid_status().equals("unpaid")) {
             bill.setBill_paid_status("paid");
-            BillingInfo.saveBillingData(billingInfos, "path/to/BillingInfo.txt");  // Save updated data
+            BillingInfo.saveBillingData(billingInfos);  // Save updated data
             System.out.println("Bill status updated to 'paid' for Customer ID: " + customerId);
         } else if (bill != null && bill.getBill_paid_status().equals("paid")) {
             System.out.println("Bill is already marked as 'paid'.");

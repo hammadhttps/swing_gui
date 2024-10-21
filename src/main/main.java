@@ -32,6 +32,7 @@ public class main {
         String nadraDBFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\NadraDB.txt";
         String tariffTaxFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\TariffTaxInfo.txt";
 
+
         // Initialize Controllers and Models
         NadraDBModel.setFilename(nadraDBFile);
         NadraDBModel nadraModel = new NadraDBModel();
