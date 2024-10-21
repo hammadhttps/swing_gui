@@ -37,6 +37,8 @@ public class LESCOBillingSystem_GUI extends JFrame {
         customizeButton(employeeButton);
         customizeButton(customerButton);
         customizeButton(cancelButton);
+        customerButton.setBackground(new Color(60, 180, 75));
+        employeeButton.setBackground(new Color(60, 180, 75));
 
 
         employeeButton.addMouseListener(new MouseAdapter() {
