@@ -3,6 +3,9 @@ package controller;
 import model.EmployeeModel;
 import model.TaxTariffInfo;
 import view.EmployeeView;
+import model.NadraDBModel;
+import view.NadraDBView;
+import controller.NadraDBController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,14 +16,20 @@ public class EmployeeController {
     String user;
     private EmployeeModel model;
     private EmployeeView view;
+    private  NadraDBModel NDM;
+    private  NadraDBView NDV;
     private JFrame loginFrame;
     private JFrame passwordChangeFrame;
     private JFrame Menuframe;
+    NadraDBController nadraController;
 
     // Constructor
-    public EmployeeController(EmployeeModel model, EmployeeView view) {
+    public EmployeeController(EmployeeModel model, EmployeeView view,NadraDBModel nd,NadraDBView nv) {
         this.model = model;
         this.view = view;
+        NDM=nd;
+        NDV=nv;
+        nadraController = new NadraDBController(NDM,NDV);
     }
 
     // Load employee data
@@ -91,6 +100,13 @@ public class EmployeeController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createPasswordChangeFrame();
+            }
+        });
+
+        ViewCNIC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nadraController.showExpiries();
             }
         });
     }

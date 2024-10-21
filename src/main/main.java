@@ -33,9 +33,13 @@ public class main {
         String tariffTaxFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\TariffTaxInfo.txt";
 
         // Initialize Controllers and Models
+        NadraDBModel.setFilename(nadraDBFile);
+        NadraDBModel nadraModel = new NadraDBModel();
+        NadraDBView nadraView = new NadraDBView();
+
         EmployeeModel employeeModel = new EmployeeModel(employeeFile);
         EmployeeView employeeView = new EmployeeView();
-        EmployeeController employeeController = new EmployeeController(employeeModel, employeeView);
+        EmployeeController employeeController = new EmployeeController(employeeModel, employeeView,nadraModel,nadraView);
         employeeController.loadEmployeeData();
 
         List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
@@ -46,12 +50,6 @@ public class main {
         CustomerView customerView = new CustomerView();
         CustomerController customerController = new CustomerController(customerModel, customerView);
 
-        NadraDBModel.setFilename(nadraDBFile);
-        NadraDBModel nadraModel = new NadraDBModel();
-        NadraDBView nadraView = new NadraDBView();
-        NadraDBController nadraController = new NadraDBController(nadraModel, nadraView);
-        //  nadraController.showExpiries();
-        //nadraController.updateExp();
 
 
         TaxTariffInfo taxTariffModel = new TaxTariffInfo(tariffTaxFile);
@@ -59,14 +57,14 @@ public class main {
         TaxTariffController taxTariffController = new TaxTariffController(taxTariffModel, taxTariffView);
 
 
-//        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
-//        sleep(2500);
-//        if (obj.getvalue() == 1) {
-//            employeeController.createLoginFrame();
-//
-//        } else if (obj.getvalue() == 2) {
-//
-//        }
+        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
+        sleep(2500);
+        if (obj.getvalue() == 1) {
+            employeeController.createLoginFrame();
+
+        } else if (obj.getvalue() == 2) {
+
+        }
 
 
     }
