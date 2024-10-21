@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.JOptionPane;
 import java.util.Scanner;
 
 public class EmployeeView {
@@ -8,44 +9,41 @@ public class EmployeeView {
 
     // Get username input
     public String getUsernameInput() {
-        System.out.print("Enter username: ");
-        return scanner.nextLine();
+        return JOptionPane.showInputDialog(null, "Enter username:");
     }
 
     // Get password input
     public String getPasswordInput() {
-        System.out.print("Enter password: ");
-        return scanner.nextLine();
+        return JOptionPane.showInputDialog(null, "Enter password:");
     }
 
     // Get new password input
     public String getNewPasswordInput() {
-        System.out.print("Enter new password: ");
-        return scanner.nextLine();
+        return JOptionPane.showInputDialog(null, "Enter new password:");
     }
 
     // Show login success
     public void showLoginSuccess() {
-        System.out.println("Login successful.");
+        JOptionPane.showMessageDialog(null, "Login successful.", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Show login failure
     public void showLoginFailure() {
-        System.out.println("Invalid username or password.");
+        JOptionPane.showMessageDialog(null, "Invalid username or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
 
     // Show password change success
     public void showPasswordChangeSuccess(String username) {
-        System.out.println("Password updated successfully for user: " + username);
+        JOptionPane.showMessageDialog(null, "Password updated successfully for user: " + username, "Password Changed", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Show password change failure
     public void showPasswordChangeFailure() {
-        System.out.println("Invalid current password.");
+        JOptionPane.showMessageDialog(null, "Invalid current password.", "Password Change Failed", JOptionPane.ERROR_MESSAGE);
     }
 
     // Display employee information
     public void displayEmployee(String username, String password) {
-        System.out.println("Username: " + username + ", Password: " + password);
+        JOptionPane.showMessageDialog(null, "Username: " + username + ", Password: " + password, "Employee Info", JOptionPane.INFORMATION_MESSAGE);
     }
 }

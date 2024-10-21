@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static java.lang.Thread.*;
+
 public class main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // File paths
         String employeeFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\EmployeesData.txt";
@@ -55,81 +57,101 @@ public class main {
         TaxTariffView taxTariffView = new TaxTariffView();
         TaxTariffController taxTariffController = new TaxTariffController(taxTariffModel, taxTariffView);
 
-        Scanner sc = new Scanner(System.in);
-        int option = 0;
 
-        while (option != -1) {
-            System.out.println("Enter 1 for Employee, 2 for Customer, or -1 to Exit: ");
-            option = sc.nextInt();
-            sc.nextLine();  // Consume newline
 
-            switch (option) {
-                case 1: // Employee actions
-                    if (employeeController.handleLogin()) {
-                        System.out.println("Login Successful!");
+        LESCOBillingSystem_GUI obj=new LESCOBillingSystem_GUI();
+        sleep(2500);
+        if(obj.getvalue()==1)
+        {
+           employeeController.createLoginFrame();
+           employeeController.createPasswordChangeFrame();
 
-                        boolean employeeActive = true;
-                        while (employeeActive) {
-                            System.out.println("Enter 1 to change password, 2 to view a customer bill, 3 to check expiry dates, 4 to show bill reports, -1 to go back: ");
-                            int empAction = sc.nextInt();
-                            sc.nextLine();  // Consume newline
+        }
+        else if(obj.getvalue()==2)
+        {
 
-                            if (empAction == 1) {
-                                employeeController.handleChangePassword();
-                            } else if (empAction == 2) {
-                                System.out.println("Enter customer ID to view bill: ");
-                                String cusId = sc.nextLine();
-                                billingController.viewBill();
-                            } else if (empAction == 3) {
-                                nadraController.checkExpiry(nadraList, customers);
-                            } else if (empAction == 4) {
-                                billingController.showBillReports();
-                            } else if (empAction == -1) {
-                                employeeActive = false;
-                            }
-                        }
-                    } else {
-                        System.out.println("Login Failed!");
-                    }
-                    break;
-
-                case 2: // Customer actions
-                    System.out.println("Enter customer ID: ");
-                    String customerId = sc.nextLine();
-                    customerController.displayCustomerInfo(customerId);
-
-                    boolean customerActive = true;
-                    while (customerActive) {
-                        System.out.println("Enter 1 to update NADRA info, 2 to view a bill, -1 to go back: ");
-                        int custAction = sc.nextInt();
-                        sc.nextLine();  // Consume newline
-
-                        if (custAction == 1) {
-                            System.out.println("Enter new NADRA ID: ");
-                            String newId = sc.nextLine();
-                            System.out.println("Enter new address: ");
-                            String newAddress = sc.nextLine();
-                            System.out.println("Enter new phone number: ");
-                            String newPhoneNo = sc.nextLine();
-                            customerController.updateCustomerInfo(newId, newPhoneNo, newAddress);
-                        } else if (custAction == 2) {
-                            billingController.viewBill();
-                        } else if (custAction == -1) {
-                            customerActive = false;
-                        }
-                    }
-                    break;
-
-                case -1: // Exit
-                    System.out.println("Exiting...");
-                    break;
-
-                default:
-                    System.out.println("Invalid option! Please enter 1, 2, or -1.");
-                    break;
-            }
         }
 
-        sc.close();
+
+
+
+
+
+      // Scanner sc = new Scanner(System.in);
+       // int option = 0;
+
+//        while (option != -1) {
+//            System.out.println("Enter 1 for Employee, 2 for Customer, or -1 to Exit: ");
+//            option = sc.nextInt();
+//            sc.nextLine();  // Consume newline
+//
+//            switch (option) {
+//                case 1: // Employee actions
+//                    if (employeeController.handleLogin()) {
+//                        System.out.println("Login Successful!");
+//
+//                        boolean employeeActive = true;
+//                        while (employeeActive) {
+//                            System.out.println("Enter 1 to change password, 2 to view a customer bill, 3 to check expiry dates, 4 to show bill reports, -1 to go back: ");
+//                            int empAction = sc.nextInt();
+//                            sc.nextLine();  // Consume newline
+//
+//                            if (empAction == 1) {
+//                                employeeController.handleChangePassword();
+//                            } else if (empAction == 2) {
+//                                System.out.println("Enter customer ID to view bill: ");
+//                                String cusId = sc.nextLine();
+//                                billingController.viewBill();
+//                            } else if (empAction == 3) {
+//                                nadraController.checkExpiry(nadraList, customers);
+//                            } else if (empAction == 4) {
+//                                billingController.showBillReports();
+//                            } else if (empAction == -1) {
+//                                employeeActive = false;
+//                            }
+//                        }
+//                    } else {
+//                        System.out.println("Login Failed!");
+//                    }
+//                    break;
+//
+//                case 2: // Customer actions
+//                    System.out.println("Enter customer ID: ");
+//                    String customerId = sc.nextLine();
+//                    customerController.displayCustomerInfo(customerId);
+//
+//                    boolean customerActive = true;
+//                    while (customerActive) {
+//                        System.out.println("Enter 1 to update NADRA info, 2 to view a bill, -1 to go back: ");
+//                        int custAction = sc.nextInt();
+//                        sc.nextLine();  // Consume newline
+//
+//                        if (custAction == 1) {
+//                            System.out.println("Enter new NADRA ID: ");
+//                            String newId = sc.nextLine();
+//                            System.out.println("Enter new address: ");
+//                            String newAddress = sc.nextLine();
+//                            System.out.println("Enter new phone number: ");
+//                            String newPhoneNo = sc.nextLine();
+//                            customerController.updateCustomerInfo(newId, newPhoneNo, newAddress);
+//                        } else if (custAction == 2) {
+//                            billingController.viewBill();
+//                        } else if (custAction == -1) {
+//                            customerActive = false;
+//                        }
+//                    }
+//                    break;
+//
+//                case -1: // Exit
+//                    System.out.println("Exiting...");
+//                    break;
+//
+//                default:
+//                    System.out.println("Invalid option! Please enter 1, 2, or -1.");
+//                    break;
+  //          }
+     //   }
+
+    //    sc.close();
     }
 }
