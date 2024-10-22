@@ -44,8 +44,11 @@ public class main {
         employeeController.loadEmployeeData();
 
         List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
-        BillingView billingView = new BillingView();
-        BillingController billingController = new BillingController(billingInfos, billingView);
+        BillingView view=new BillingView();
+        BillingController billingController = new BillingController(billingInfos,view);
+       // view.displayMainView();
+
+
 
         Customer customerModel = new Customer(customerFile);
         CustomerView customerView = new CustomerView();
@@ -58,14 +61,14 @@ public class main {
         TaxTariffController taxTariffController = new TaxTariffController(taxTariffModel, taxTariffView);
 
 
-        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
-        sleep(2500);
-        if (obj.getvalue() == 1) {
-            employeeController.createLoginFrame();
-
-        } else if (obj.getvalue() == 2) {
-
-        }
+//        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
+//        sleep(2500);
+//        if (obj.getvalue() == 1) {
+//            employeeController.createLoginFrame();
+//
+//        } else if (obj.getvalue() == 2) {
+//
+//        }
 
 
     }
