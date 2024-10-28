@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class BillingView {
     private JFrame frame;
@@ -15,7 +17,7 @@ public class BillingView {
     public BillingView() {
         // Main frame setup
         frame = new JFrame("Billing System");
-        frame.setSize(400, 300);
+        frame.setSize(420, 420);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);  // Center the frame on the screen
         frame.setLayout(new BorderLayout(10, 10));
@@ -33,6 +35,56 @@ public class BillingView {
         viewBillButton = new JButton("View Bill");
         showReportsButton = new JButton("Show Bill Reports");
         updateStatusButton = new JButton("Update Bill Status");
+        updateStatusButton.setForeground(Color.black);
+        showReportsButton.setForeground(Color.black);
+        viewBillButton.setForeground(Color.black);
+        updateStatusButton.setBackground(new Color(0, 150, 136));
+        viewBillButton.setBackground(new Color(0, 150, 136));
+        showReportsButton.setBackground(new Color(0, 150, 136));
+
+        viewBillButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e)
+            {
+                super.mouseEntered(e);
+                viewBillButton.setBackground(new Color(60, 180, 75));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+               viewBillButton.setBackground(new Color(0, 150, 136));
+            }
+        });
+        showReportsButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                showReportsButton.setBackground(new Color(60, 180, 75));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                showReportsButton.setBackground(new Color(0, 150, 136));
+            }
+        });
+
+        updateStatusButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                updateStatusButton.setBackground(new Color(60, 180, 75));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                updateStatusButton.setBackground(new Color(0, 150, 136));
+            }
+        });
+
+
 
         buttonPanel.add(viewBillButton);
         buttonPanel.add(showReportsButton);
