@@ -43,16 +43,21 @@ public class main {
         EmployeeController employeeController = new EmployeeController(employeeModel, employeeView,nadraModel,nadraView);
         employeeController.loadEmployeeData();
 
-        List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
-        BillingView view=new BillingView();
-        BillingController billingController = new BillingController(billingInfos,view,billingFile);
+//        List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
+//        BillingView view=new BillingView();
+//        BillingController billingController = new BillingController(billingInfos,view,billingFile);
        // view.displayMainView();
 
 
 
-        Customer customerModel = new Customer(customerFile);
-        CustomerView customerView = new CustomerView();
-        CustomerController customerController = new CustomerController(customerModel, customerView);
+        // Load customer data from the file
+        Customer model = new Customer(customerFile);
+
+        // Initialize the view
+        CustomerView view = new CustomerView();
+
+        // Initialize the controller with the model and view
+        CustomerController controller = new CustomerController(model, view);
 
 
 

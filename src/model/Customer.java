@@ -71,27 +71,38 @@ public class Customer {
     public void setPeak_hour_units(int peak_hour_units) { this.peak_hour_units = peak_hour_units; }
 
     // Load customer data from file
-    public static List<Customer> loadCustomerData() {
+    public static List<Customer> loadCustomerData(String filename) {
         List<Customer> customerList = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
-
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 10) {
-                    Customer customer = new Customer(
+                    customerList.add(new Customer(
                             parts[0], parts[1], parts[2], parts[3], parts[4],
                             parts[5].charAt(0), parts[6], parts[7],
                             Integer.parseInt(parts[8]), Integer.parseInt(parts[9])
-                    );
-                    customerList.add(customer);
+                    ));
                 }
             }
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
         return customerList;
+    }
+
+    public static void saveCustomerData(List<Customer> customerList, String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Customer customer : customerList) {
+                writer.write(String.join(",",
+                        customer.cus_id, customer.CNIC, customer.name, customer.address,
+                        customer.phone_no, String.valueOf(customer.cus_type), customer.meter_type,
+                        customer.connec_date, String.valueOf(customer.reg_hour_units), String.valueOf(customer.peak_hour_units)
+                ));
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

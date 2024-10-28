@@ -25,6 +25,7 @@ public class NadraDBController {
 
     private NadraDBModel model;
     private NadraDBView view;
+    String customerFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\CustomerInfo.txt";
 
     // Constructor
     public NadraDBController(NadraDBModel model, NadraDBView view) {
@@ -40,7 +41,7 @@ public class NadraDBController {
     public void showExpiries()
     {
         List<NadraDBModel>nadralist=loadNadraData();
-        List<Customer>customers=Customer.loadCustomerData();
+        List<Customer>customers=Customer.loadCustomerData(customerFile);
         checkExpiry(nadralist,customers);
     }
 
@@ -109,7 +110,7 @@ public class NadraDBController {
     public void updateExp()
     {
         List<NadraDBModel>nadralist=loadNadraData();
-        List<Customer>customers=Customer.loadCustomerData();
+        List<Customer>customers=Customer.loadCustomerData(customerFile);
         updateExpiryDate(nadralist,customers);
 
     }

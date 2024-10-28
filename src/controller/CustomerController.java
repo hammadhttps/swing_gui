@@ -8,6 +8,7 @@ import java.util.List;
 public class CustomerController {
     private Customer model;
     private CustomerView view;
+    String customerFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\CustomerInfo.txt";
 
     // Constructor
     public CustomerController(Customer model, CustomerView view) {
@@ -17,25 +18,25 @@ public class CustomerController {
 
     // Load customer data from file
     public List<Customer> getCustomerData() {
-        return Customer.loadCustomerData();
+        return Customer.loadCustomerData(customerFile);
     }
 
     // Display customer information using the view
-    public void displayCustomerInfo(String cus_id) {
-        List<Customer> customerList = getCustomerData();
-        Customer matchedCustomer = null;
-        for (Customer customer : customerList) {
-            if (customer.getCus_id().equals(cus_id)) {
-                matchedCustomer = customer;
-                break;
-            }
-        }
-        if (matchedCustomer != null) {
-            view.displayCustomerInfo(matchedCustomer);
-        } else {
-            view.displayErrorMessage("Customer not found.");
-        }
-    }
+//    public void displayCustomerInfo(String cus_id) {
+//        List<Customer> customerList = getCustomerData();
+//        Customer matchedCustomer = null;
+//        for (Customer customer : customerList) {
+//            if (customer.getCus_id().equals(cus_id)) {
+//                matchedCustomer = customer;
+//                break;
+//            }
+//        }
+//        if (matchedCustomer != null) {
+//            view.displayCustomerInfo(matchedCustomer);
+//        } else {
+//            view.displayErrorMessage("Customer not found.");
+//        }
+//    }
 
     // Update customer information
     public void updateCustomerInfo(String cus_id, String phone_no, String address) {
