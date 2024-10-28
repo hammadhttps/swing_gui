@@ -50,20 +50,16 @@ public class main {
 
 
 
-        // Load customer data from the file
-        Customer model = new Customer(customerFile);
 
-        // Initialize the view
-        CustomerView view = new CustomerView();
-
-        // Initialize the controller with the model and view
-        CustomerController controller = new CustomerController(model, view);
+//        Customer model = new Customer(customerFile);
+//        CustomerView view = new CustomerView();
+//        CustomerController controller = new CustomerController(model, view);
 
 
 
-        TaxTariffInfo taxTariffModel = new TaxTariffInfo(tariffTaxFile);
-        TaxTariffView taxTariffView = new TaxTariffView();
-        TaxTariffController taxTariffController = new TaxTariffController(taxTariffModel, taxTariffView);
+        TaxTariffInfo model = new TaxTariffInfo(tariffTaxFile); // Specify your data file path
+        TaxTariffView view = new TaxTariffView();
+        new TaxTariffController(model, view);
 
 //
 //        LESCOBillingSystem_GUI obj = new LESCOBillingSystem_GUI();
