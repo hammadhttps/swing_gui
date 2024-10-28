@@ -45,7 +45,7 @@ public class main {
 
         List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
         BillingView view=new BillingView();
-        BillingController billingController = new BillingController(billingInfos,view);
+        BillingController billingController = new BillingController(billingInfos,view,billingFile);
        // view.displayMainView();
 
 

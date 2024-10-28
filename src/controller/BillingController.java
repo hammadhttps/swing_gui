@@ -2,25 +2,32 @@ package controller;
 
 import model.BillingInfo;
 import view.BillingView;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.time.LocalDate;
 
 public class BillingController {
     private List<BillingInfo> billingInfos;
     private BillingView billingView;
 
-    public BillingController(List<BillingInfo> billingInfos, BillingView billingView) {
+    public BillingController(List<BillingInfo> billingInfos, BillingView billingView, String filename) {
         this.billingInfos = billingInfos;
         this.billingView = billingView;
 
-        // Adding listeners to the buttons
+        // Set the filename to avoid null issues
+        BillingInfo.filename = filename;
+
         billingView.addViewBillListener(new ViewBillListener());
         billingView.addShowReportsListener(new ShowReportsListener());
         billingView.addUpdateStatusListener(new UpdateBillStatusListener());
     }
+
 
     // ActionListener for viewing a bill
     class ViewBillListener implements ActionListener {
@@ -64,6 +71,13 @@ public class BillingController {
     }
 
     // ActionListener for updating bill status
+    // In the BillingController class
+
+    // ActionListener for updating bill status
+      // Import required for getting the current date
+
+    // Import DateTimeFormatter for custom date format
+
     class UpdateBillStatusListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -77,15 +91,29 @@ public class BillingController {
                 }
             }
 
-            if (bill != null && "unpaid".equalsIgnoreCase(bill.getBill_paid_status())) {
-                bill.setBill_paid_status("paid");
-                BillingInfo.saveBillingData(billingInfos);  // Save updated data
-                JOptionPane.showMessageDialog(null, "Bill status updated to 'paid' for Customer ID: " + customerId);
-            } else if (bill != null && "paid".equalsIgnoreCase(bill.getBill_paid_status())) {
-                JOptionPane.showMessageDialog(null, "Bill is already marked as 'paid'.");
+            if (bill != null) {
+                if ("unpaid".equalsIgnoreCase(bill.getBill_paid_status())) {
+                    // Update the bill status and set the payment date
+                    bill.setBill_paid_status("paid");
+
+                    // Format the current date to "dd/MM/yy" format
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+                    String formattedDate = LocalDate.now().format(formatter);
+                    bill.setPayment_date(formattedDate);  // Set formatted date as payment date
+
+                    // Save updated data to file
+                    BillingInfo.saveBillingData(billingInfos);
+
+                    JOptionPane.showMessageDialog(null, "Bill status updated to 'paid' for Customer ID: " + customerId);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Bill is already marked as 'paid'.");
+                }
             } else {
                 billingView.noBillFoundMessage(customerId);
             }
         }
     }
+
+
+
 }

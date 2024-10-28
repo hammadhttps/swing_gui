@@ -12,7 +12,9 @@ import java.awt.event.MouseEvent;
 public class BillingView {
     private JFrame frame;
     private JTextField customerIdField;
-    private JButton viewBillButton, showReportsButton, updateStatusButton;
+    private JButton viewBillButton;
+    private final JButton showReportsButton;
+    private JButton updateStatusButton;
 
     public BillingView() {
         // Main frame setup

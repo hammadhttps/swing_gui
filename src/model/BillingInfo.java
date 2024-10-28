@@ -16,7 +16,7 @@ public class BillingInfo {
     private String due_date;
     private String bill_paid_status;
     private String payment_date;
-    static String filename;
+    public static String filename;
 
     public BillingInfo(String filename1) { filename=filename1;}
 
@@ -167,6 +167,10 @@ public class BillingInfo {
     }
 
     public static void saveBillingData(List<BillingInfo> billingInfos) {
+        if (filename == null) {
+            System.err.println("Filename not set. Please set the filename before saving.");
+            return;
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (BillingInfo billingInfo : billingInfos) {
                 writer.write(billingInfo.getCus_id() + "," + billingInfo.getBilling_month() + "," + billingInfo.getCurr_reg_meter() + "," +
