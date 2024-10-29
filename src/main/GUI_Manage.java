@@ -1,19 +1,48 @@
 package main;
 
+import controller.*;
+import model.*;
+import view.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
-public class LESCOBillingSystem_GUI extends JFrame {
+public class GUI_Manage extends JFrame
+{
 
-    public int value;
 
-    public LESCOBillingSystem_GUI() {
-        // Set the title of the frame
-        super("Welcome to the LESCO Billing System");
+
+
+        public  GUI_Manage()
+        {
+            super("Welcome to the LESCO Billing System");
+            // File paths
+            String employeeFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\EmployeesData.txt";
+            String customerFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\CustomerInfo.txt";
+            String billingFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\BillingInfo.txt";
+            String nadraDBFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\NadraDB.txt";
+            String tariffTaxFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\TariffTaxInfo.txt";
+
+
+            // Initialize Controllers and Models
+            NadraDBModel.setFilename(nadraDBFile);
+            NadraDBModel nadraModel = new NadraDBModel();
+            NadraDBView nadraView = new NadraDBView();
+            NadraDBController cn=new NadraDBController(nadraModel,nadraView);
+
+            EmployeeModel employeeModel = new EmployeeModel(employeeFile);
+            EmployeeView employeeView = new EmployeeView();
+            EmployeeController employeeController = new EmployeeController(employeeModel, employeeView,nadraModel,nadraView);
+            employeeController.loadEmployeeData();
+
+
+
+
 
         // Set size, layout, and location
         setSize(600, 550);
@@ -41,6 +70,23 @@ public class LESCOBillingSystem_GUI extends JFrame {
         employeeButton.setBackground(new Color(60, 180, 75));
 
 
+        customerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
+                BillingView view=new BillingView();
+                BillingController billingController = new BillingController(billingInfos,view,billingFile);
+                cn.updateExp();
+
+
+            }
+        });
+        employeeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                employeeController.createLoginFrame();
+            }
+        });
         employeeButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e)
@@ -80,14 +126,14 @@ public class LESCOBillingSystem_GUI extends JFrame {
         employeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              value=1;
-              dispose();
+
+                dispose();
             }
         });
         customerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                value=2;
+
                 dispose();
             }
         });
@@ -111,20 +157,14 @@ public class LESCOBillingSystem_GUI extends JFrame {
         setVisible(true);
     }
 
-    // Method to customize button appearance
-    private void customizeButton(JButton button) {
+        // Method to customize button appearance
+        private void customizeButton(JButton button) {
         button.setFont(new Font("Verdana", Font.PLAIN, 18));
         button.setForeground(Color.WHITE);
         button.setBackground(new Color(70, 130, 180)); // Steel blue background
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
     }
-    public Integer getvalue()
-    {
-        return value;
     }
 
 
-
-
-}

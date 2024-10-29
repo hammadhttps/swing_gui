@@ -1,16 +1,14 @@
 package controller;
 
-import model.EmployeeModel;
-import model.TaxTariffInfo;
-import view.EmployeeView;
-import model.NadraDBModel;
-import view.NadraDBView;
+import model.*;
+import view.*;
 import controller.NadraDBController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class EmployeeController {
     String user;
@@ -23,6 +21,9 @@ public class EmployeeController {
     private JFrame Menuframe;
     NadraDBController nadraController;
 
+
+
+
     // Constructor
     public EmployeeController(EmployeeModel model, EmployeeView view,NadraDBModel nd,NadraDBView nv) {
         this.model = model;
@@ -34,9 +35,20 @@ public class EmployeeController {
 
     // Load employee data
     public void loadEmployeeData() {
+
         model.loadEmployeeData();
+
+
     }
     public void showMenu() {
+        String customerFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\CustomerInfo.txt";
+        String billingFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\BillingInfo.txt";
+        String nadraDBFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\NadraDB.txt";
+        String tariffTaxFile = "C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\resources\\TariffTaxInfo.txt";
+
+
+
+
         // Resize the icon to fit better with the text
         ImageIcon icon = new ImageIcon(new ImageIcon("C:\\Users\\city\\Desktop\\java\\LESCO_MVC\\src\\icons\\Network-Control-Panel-icon.png")
                 .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
@@ -57,15 +69,39 @@ public class EmployeeController {
 
         JButton viewBill = createStyledButton("View Bills");
         viewBill.setBounds(230, 120, 150, 35);
+        viewBill.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Customer model = new Customer(customerFile);
+                CustomerView view2 = new CustomerView();
+                CustomerController controller = new CustomerController(model, view2);
+            }
+        });
 
         JButton ViewCNIC = createStyledButton("Show Customers CNIC Dates");
         ViewCNIC.setBounds(80, 170, 300, 35);
 
         JButton Billreports = createStyledButton("Bill Reports");
         Billreports.setBounds(80, 220, 300, 35);
+        Billreports.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<BillingInfo> billingInfos = BillingInfo.loadBillingData(billingFile);
+                BillingView view=new BillingView();
+                BillingController billingController = new BillingController(billingInfos,view,billingFile);
+            }
+        });
 
         JButton taxtarriff = createStyledButton("Update Tax Tariff");
         taxtarriff.setBounds(80, 270, 300, 35);
+        taxtarriff.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TaxTariffInfo model2 = new TaxTariffInfo(tariffTaxFile);
+                TaxTariffView view3 = new TaxTariffView();
+                new TaxTariffController(model2, view3);
+            }
+        });
 
         JButton cancel = createStyledButton("Cancel");
         cancel.setBounds(300, 350, 100, 35);
